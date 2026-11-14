@@ -1,3 +1,44 @@
+# Wanderlog fork
+
+This is Wanderlog's fork of react-native-image-resizer. We publish it to npm as
+[`@wanderlogapp/react-native-image-resizer`](https://www.npmjs.com/package/@wanderlogapp/react-native-image-resizer).
+The itineraries repo installs it with
+`"react-native-image-resizer": "npm:@wanderlogapp/react-native-image-resizer@…"`.
+
+## Releasing a new version
+
+First, commit and push your change to the `wanderlog` branch. Check
+https://github.com/wanderlog/react-native-image-resizer/tags for the latest version, and add 1 to
+the last number. Make sure `npm whoami` prints `wanderlogapp` (if not, run
+`npm login`). Then run:
+
+```shell
+VERSION='<substitute version here>' # e.g., VERSION='v1.2.2-peter.3'
+
+# Start wanderlog-built from the latest commit on the wanderlog branch
+git fetch
+git checkout wanderlog-built
+git reset --hard origin/wanderlog
+
+# Rename the package for npm, and set its version (without the leading v)
+npm pkg set name='@wanderlogapp/react-native-image-resizer' version="${VERSION#v}"
+
+# Commit, tag, and push the release
+git commit -am "[$VERSION] Release built version"
+git tag "$VERSION"
+git push -f origin wanderlog-built "$VERSION"
+
+# Publish to npm. --ignore-scripts skips the package's build and install
+# scripts, since the built files are already committed
+npm publish --access public --ignore-scripts
+```
+
+Then, in itineraries, bump the version in the `npm:@wanderlogapp/react-native-image-resizer@…`
+alias and run `yarn install`. New `@wanderlogapp/*` versions skip the
+one-week age gate because of `npmPreapprovedPackages` in `.yarnrc.yml`.
+
+--------------------------------------------------------------------------------
+
 # React Native Image Resizer
 
 A React Native module that can create scaled versions of local images (also supports the assets library on iOS).
