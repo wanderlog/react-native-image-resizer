@@ -1,5 +1,5 @@
 {
-  "name": "react-native-image-resizer",
+  "name": "@wanderlogapp/react-native-image-resizer",
   "version": "1.2.2-peter.2",
   "description": "Rescale local images with React Native",
   "main": "./index.js",
